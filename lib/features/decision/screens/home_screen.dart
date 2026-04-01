@@ -241,15 +241,18 @@ class HomeScreen extends ConsumerWidget {
   }
 
   Widget _buildHeroAvatar(String id) {
-    return Container(
-      margin: const EdgeInsets.only(right: -10),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: AppColors.pastelPurple, width: 3),
-      ),
-      child: CircleAvatar(
-        radius: 18,
-        backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=$id'),
+    return Transform.translate(
+      offset: const Offset(-10, 0),
+      child: Container(
+        margin: const EdgeInsets.only(right: 8),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: AppColors.pastelPurple, width: 3),
+        ),
+        child: CircleAvatar(
+          radius: 18,
+          backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=$id'),
+        ),
       ),
     );
   }
