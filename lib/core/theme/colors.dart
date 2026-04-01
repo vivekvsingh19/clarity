@@ -20,4 +20,22 @@ class AppColors {
   static const Color greyMedium = Color(0xFFE0E0E0);
   static const Color textPrimary = Color(0xFF1A1A1A);
   static const Color textSecondary = Color(0xFF888888);
+
+  // Light Mode Colors
+  static const Color lightBorder = Color(0xFFE0E0E0);
+  static const Color lightSurface = Color(0xFFFAFAFA);
+  static const Color lightSurfaceHighlight = Color(0xFFF0F0F0);
+  static const Color lightTextSecondary = Color(0xFF888888);
+
+  // Dark Mode Colors
+  static const Color darkBorder = Color(0xFF424242);
+  static const Color darkSurface = Color(0xFF1E1E1E);
+  static const Color darkSurfaceHighlight = Color(0xFF2A2A2A);
+  static const Color darkTextSecondary = Color(0xFFB0B0B0);
+
+  // Status Colors
+  static const Color positive = Color(0xFF4CAF50);
+  static const Color negative = Color(0xFFFF5252);
+  static const Color negativeBackground = Color(0xFFFFEBEE);
+  static const Color positiveBackground = Color(0xFFE8F5E9);
 }

@@ -10,7 +10,11 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.background,
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
+        onPrimary: AppColors.onPrimary,
         surface: AppColors.surface,
+        onSurface: AppColors.textPrimary,
+        error: AppColors.negative,
+        onError: Colors.white,
       ),
       textTheme: GoogleFonts.nunitoTextTheme().apply(
         bodyColor: AppColors.textPrimary,
@@ -46,8 +50,9 @@ class AppTheme {
           return AppColors.textSecondary;
         }),
         trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected))
+          if (states.contains(WidgetState.selected)) {
             return AppColors.primary.withAlpha(50);
+          }
           return AppColors.greyMedium;
         }),
       ),
@@ -63,7 +68,6 @@ class AppTheme {
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.onPrimary,
         elevation: 8,
-        shadowColor: Colors.black26,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(30)),
         ),

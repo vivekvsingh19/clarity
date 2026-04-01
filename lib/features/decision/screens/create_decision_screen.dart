@@ -260,7 +260,7 @@ class _Step2OptionsState extends ConsumerState<_Step2Options> {
             child: ListView.separated(
               physics: const BouncingScrollPhysics(),
               itemCount: draft.options.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 12),
+              separatorBuilder: (_, _) => const SizedBox(height: 24),
               itemBuilder: (context, index) {
                 final option = draft.options[index];
                 return Container(
@@ -361,7 +361,7 @@ class _Step3ProsCons extends ConsumerWidget {
             child: ListView.separated(
               physics: const BouncingScrollPhysics(),
               itemCount: draft.options.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 24),
+              separatorBuilder: (_, _) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
                 final option = draft.options[index];
                 return _OptionProConCard(option: option, isDark: isDark);
@@ -658,7 +658,7 @@ class _Step4Regret extends ConsumerWidget {
             child: ListView.separated(
               physics: const BouncingScrollPhysics(),
               itemCount: draft.options.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 24),
+              separatorBuilder: (_, _) => const SizedBox(height: 24),
               itemBuilder: (context, index) {
                 final option = draft.options[index];
                 return Container(
@@ -741,23 +741,26 @@ class _Step4Regret extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: const TextStyle(fontSize: 13, color: Colors.grey),
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(fontSize: 13, color: Colors.grey),
+                  ),
+                ],
+              ),
             ),
+            const SizedBox(width: 16),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
