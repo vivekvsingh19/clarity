@@ -181,59 +181,6 @@ class HomeScreen extends ConsumerWidget {
                     ),
             ),
 
-            // Fake Bottom Navigation Bar (just UI layout concept)
-            Container(
-              margin: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(50),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.home_filled,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.grid_view_rounded,
-                      color: Colors.white54,
-                    ),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () => context.push(
-                      '/create',
-                    ), // The core 'New' logic attached to center item
-                    icon: const Icon(
-                      Icons.add_box_rounded,
-                      color: Colors.white,
-                    ),
-                    iconSize: 32,
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.person_outline,
-                      color: Colors.white54,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                ],
-              ),
-            ),
           ],
         ),
       ),
