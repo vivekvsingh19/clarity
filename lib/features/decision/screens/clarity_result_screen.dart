@@ -42,68 +42,74 @@ class ClarityResultScreen extends ConsumerWidget {
     final hasBiases = decision.biases.isNotEmpty;
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
         ),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Verdict',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                letterSpacing: -1.0,
+      body: DecoratedBox(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF9FAFD), Color(0xFFF2F5FB)],
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Verdict',
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: -1.2,
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              decision.title,
-              style: TextStyle(
-                fontSize: 18,
-                color: isDark
-                    ? AppColors.darkTextSecondary
-                    : AppColors.lightTextSecondary,
-              ),
-            ),
-            const SizedBox(height: 48),
-
-            _SummaryCard(bestOption: bestOption, isDark: isDark),
-
-            if (hasBiases) ...[
-              const SizedBox(height: 48),
-              const Text(
-                'Bias Warning',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              const SizedBox(height: 8),
+              Text(
+                decision.title,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: isDark
+                      ? AppColors.darkTextSecondary
+                      : AppColors.lightTextSecondary,
+                ),
               ),
               const SizedBox(height: 24),
-              ...decision.biases.map(
-                (b) => _BiasCard(biasInsight: b, isDark: isDark),
+              _SummaryCard(bestOption: bestOption, isDark: isDark),
+              if (hasBiases) ...[
+                const SizedBox(height: 40),
+                const Text(
+                  'Bias warning',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 16),
+                ...decision.biases.map(
+                  (b) => _BiasCard(biasInsight: b, isDark: isDark),
+                ),
+              ],
+              const SizedBox(height: 40),
+              const Text(
+                'Breakdown',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
               ),
+              const SizedBox(height: 16),
+              ...decision.options.map((opt) {
+                return _OptionMetricCard(
+                  option: opt,
+                  isDark: isDark,
+                  isBest: opt.id == bestOption.id,
+                );
+              }),
+              const SizedBox(height: 48),
             ],
-
-            const SizedBox(height: 48),
-            const Text(
-              'Breakdown',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 24),
-
-            ...decision.options.map((opt) {
-              return _OptionMetricCard(
-                option: opt,
-                isDark: isDark,
-                isBest: opt.id == bestOption.id,
-              );
-            }),
-            const SizedBox(height: 48),
-          ],
+          ),
         ),
       ),
     );
@@ -119,10 +125,25 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(32),
+      padding: const EdgeInsets.all(28),
       decoration: BoxDecoration(
-        color: AppColors.primary, // Black in light mode, White in dark mode
-        borderRadius: BorderRadius.circular(16),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.primary,
+            AppColors.primary.withBlue(50),
+            AppColors.pastelPurple,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(28),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x26000000),
+            blurRadius: 24,
+            offset: Offset(0, 12),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,16 +152,24 @@ class _SummaryCard extends StatelessWidget {
             children: [
               Icon(Icons.insights, color: AppColors.onPrimary, size: 24),
               const SizedBox(width: 12),
-              Text(
-                'Data Suggestion',
-                style: TextStyle(
-                  color: AppColors.onPrimary.withAlpha(200),
-                  fontWeight: FontWeight.bold,
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.white.withAlpha(18),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  'Recommendation',
+                  style: TextStyle(
+                    color: AppColors.onPrimary.withAlpha(230),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 28),
           Text(
             'Based on the weighted logic and regret minimisation, the best path is:',
             style: TextStyle(
@@ -152,18 +181,32 @@ class _SummaryCard extends StatelessWidget {
           const SizedBox(height: 24),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
               color: AppColors.onPrimary,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(20),
             ),
-            child: Text(
-              bestOption.title,
-              style: TextStyle(
-                color: AppColors.primary,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Best option',
+                  style: TextStyle(
+                    color: AppColors.textSecondary,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  bestOption.title,
+                  style: const TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -185,25 +228,32 @@ class _BiasCard extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: isDark
-            ? AppColors.negativeBackground.withAlpha(20)
+            ? AppColors.darkSurface
             : AppColors.negativeBackground,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.negative.withAlpha(30)),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: AppColors.negative.withAlpha(34)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.negative,
-            size: 24,
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.negative.withAlpha(14),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: const Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.negative,
+              size: 22,
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
             child: Text(
               biasInsight,
               style: TextStyle(
-                color: isDark ? const Color(0xFFEF9A9A) : AppColors.negative,
+                color: isDark ? const Color(0xFFFFD3D3) : AppColors.negative,
                 height: 1.5,
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
@@ -238,8 +288,15 @@ class _OptionMetricCard extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(color: borderColor, width: isBest ? 2 : 1),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0D000000),
+            blurRadius: 18,
+            offset: Offset(0, 10),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,7 +309,7 @@ class _OptionMetricCard extends StatelessWidget {
                   option.title,
                   style: const TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
               ),
@@ -264,7 +321,7 @@ class _OptionMetricCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
                     'Best',

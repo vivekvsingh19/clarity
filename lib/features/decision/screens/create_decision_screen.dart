@@ -151,30 +151,90 @@ class _Step1TitleState extends ConsumerState<_Step1Title> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'What decision are you facing?',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              height: 1.3,
+          Container(
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              color: widget.isDark
+                  ? AppColors.darkSurface
+                  : AppColors.lightSurface,
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(
+                color: widget.isDark
+                    ? AppColors.darkBorder
+                    : AppColors.lightBorder,
+              ),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x0D000000),
+                  blurRadius: 18,
+                  offset: Offset(0, 10),
+                ),
+              ],
+            ),
+            child: const Row(
+              children: [
+                Icon(Icons.edit_note_rounded, color: AppColors.primary),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    'What decision are you facing?',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
+                      height: 1.2,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 32),
-          TextField(
-            controller: _controller,
-            onChanged: (val) =>
-                ref.read(draftDecisionProvider.notifier).updateTitle(val),
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
-            maxLines: null,
-            minLines: 1,
-            autofocus: true,
-            decoration: const InputDecoration(
-              hintText: 'e.g., Should I look for a new job?',
+          const SizedBox(height: 20),
+          Container(
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              color: widget.isDark
+                  ? AppColors.darkSurface
+                  : AppColors.lightSurface,
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(
+                color: widget.isDark
+                    ? AppColors.darkBorder
+                    : AppColors.lightBorder,
+              ),
+            ),
+            child: TextField(
+              controller: _controller,
+              onChanged: (val) =>
+                  ref.read(draftDecisionProvider.notifier).updateTitle(val),
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+              maxLines: null,
+              minLines: 1,
+              autofocus: true,
+              decoration: const InputDecoration(
+                hintText: 'e.g., Should I look for a new job?',
+                border: InputBorder.none,
+                filled: false,
+                contentPadding: EdgeInsets.zero,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Give the decision a clear name so the rest of the flow stays focused.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: widget.isDark
+                  ? AppColors.darkTextSecondary
+                  : AppColors.lightTextSecondary,
+              height: 1.5,
             ),
           ),
         ],
@@ -216,21 +276,33 @@ class _Step2OptionsState extends ConsumerState<_Step2Options> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'List the possible paths',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Add at least two options.',
-            style: TextStyle(
-              fontSize: 16,
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
               color: widget.isDark
-                  ? AppColors.darkTextSecondary
-                  : AppColors.lightTextSecondary,
+                  ? AppColors.darkSurface
+                  : AppColors.lightSurface,
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: borderColor),
+            ),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'List the possible paths',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Add at least two options so the app can compare them clearly.',
+                  style: TextStyle(fontSize: 15, color: AppColors.textSecondary),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 8),
+          const SizedBox(height: 24),
           Row(
             children: [
               Expanded(
@@ -238,6 +310,7 @@ class _Step2OptionsState extends ConsumerState<_Step2Options> {
                   controller: _controller,
                   decoration: const InputDecoration(
                     hintText: 'Add an option...',
+                    prefixIcon: Icon(Icons.route_rounded),
                   ),
                   onSubmitted: (_) => _addOption(),
                 ),
@@ -255,7 +328,7 @@ class _Step2OptionsState extends ConsumerState<_Step2Options> {
               ),
             ],
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 20),
           Expanded(
             child: ListView.separated(
               physics: const BouncingScrollPhysics(),
@@ -264,16 +337,20 @@ class _Step2OptionsState extends ConsumerState<_Step2Options> {
               itemBuilder: (context, index) {
                 final option = draft.options[index];
                 return Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
-                  ),
+                  padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
                     color: widget.isDark
                         ? AppColors.darkSurface
                         : AppColors.lightSurface,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: borderColor),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x0C000000),
+                        blurRadius: 18,
+                        offset: Offset(0, 10),
+                      ),
+                    ],
                   ),
                   child: Row(
                     children: [
@@ -283,7 +360,7 @@ class _Step2OptionsState extends ConsumerState<_Step2Options> {
                           color: widget.isDark
                               ? AppColors.darkSurfaceHighlight
                               : AppColors.lightSurfaceHighlight,
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.circular(14),
                         ),
                         child: Text(
                           '${index + 1}',
@@ -299,7 +376,7 @@ class _Step2OptionsState extends ConsumerState<_Step2Options> {
                           option.title,
                           style: const TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
@@ -326,12 +403,23 @@ class _Step3ProsCons extends ConsumerWidget {
 
     if (draft.options.isEmpty) {
       return Center(
-        child: Text(
-          'Please add options first.',
-          style: TextStyle(
-            color: isDark
-                ? AppColors.darkTextSecondary
-                : AppColors.lightTextSecondary,
+        child: Container(
+          margin: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(
+              color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+            ),
+          ),
+          child: Text(
+            'Please add options first.',
+            style: TextStyle(
+              color: isDark
+                  ? AppColors.darkTextSecondary
+                  : AppColors.lightTextSecondary,
+            ),
           ),
         ),
       );
@@ -413,19 +501,27 @@ class _OptionProConCardState extends ConsumerState<_OptionProConCard> {
         : AppColors.lightSurface;
 
     return Container(
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: surfaceColor,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(color: borderColor),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0B000000),
+            blurRadius: 18,
+            offset: Offset(0, 10),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
             child: Text(
               widget.option.title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
             ),
           ),
           Divider(height: 1, color: borderColor),
@@ -452,7 +548,10 @@ class _OptionProConCardState extends ConsumerState<_OptionProConCard> {
                             Expanded(
                               child: Text(
                                 pc.description,
-                                style: const TextStyle(fontSize: 15),
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                             Container(
@@ -464,7 +563,7 @@ class _OptionProConCardState extends ConsumerState<_OptionProConCard> {
                                 color: widget.isDark
                                     ? AppColors.darkSurfaceHighlight
                                     : AppColors.lightSurfaceHighlight,
-                                borderRadius: BorderRadius.circular(6),
+                                borderRadius: BorderRadius.circular(999),
                                 border: Border.all(color: borderColor),
                               ),
                               child: Text(
@@ -495,12 +594,12 @@ class _OptionProConCardState extends ConsumerState<_OptionProConCard> {
                         onTap: () =>
                             setState(() => _selectedType = ProConType.pro),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
                           decoration: BoxDecoration(
                             color: _selectedType == ProConType.pro
                                 ? AppColors.positive
                                 : Colors.transparent,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(16),
                             border: Border.all(
                               color: _selectedType == ProConType.pro
                                   ? AppColors.positive
@@ -528,12 +627,12 @@ class _OptionProConCardState extends ConsumerState<_OptionProConCard> {
                         onTap: () =>
                             setState(() => _selectedType = ProConType.con),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
                           decoration: BoxDecoration(
                             color: _selectedType == ProConType.con
                                 ? AppColors.negative
                                 : Colors.transparent,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(16),
                             border: Border.all(
                               color: _selectedType == ProConType.con
                                   ? AppColors.negative
@@ -562,6 +661,7 @@ class _OptionProConCardState extends ConsumerState<_OptionProConCard> {
                   controller: _controller,
                   decoration: const InputDecoration(
                     hintText: 'Describe the point...',
+                    prefixIcon: Icon(Icons.notes_rounded),
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 12,
@@ -592,13 +692,8 @@ class _OptionProConCardState extends ConsumerState<_OptionProConCard> {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    IconButton(
+                    IconButton.filled(
                       icon: const Icon(Icons.check),
-                      style: IconButton.styleFrom(
-                        backgroundColor: widget.isDark
-                            ? AppColors.darkSurfaceHighlight
-                            : AppColors.lightSurfaceHighlight,
-                      ),
                       onPressed: _addProCon,
                     ),
                   ],
@@ -767,7 +862,7 @@ class _Step4Regret extends ConsumerWidget {
                 color: isDark
                     ? AppColors.darkSurfaceHighlight
                     : AppColors.lightSurfaceHighlight,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(999),
               ),
               child: Text(
                 '${value.toInt()}',
