@@ -153,7 +153,10 @@ class _SummaryCard extends StatelessWidget {
               Icon(Icons.insights, color: AppColors.onPrimary, size: 24),
               const SizedBox(width: 12),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white.withAlpha(18),
                   borderRadius: BorderRadius.circular(999),
@@ -227,9 +230,7 @@ class _BiasCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: isDark
-            ? AppColors.darkSurface
-            : AppColors.negativeBackground,
+        color: isDark ? AppColors.darkSurface : AppColors.negativeBackground,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: AppColors.negative.withAlpha(34)),
       ),

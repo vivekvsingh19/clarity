@@ -211,10 +211,7 @@ class _Step1TitleState extends ConsumerState<_Step1Title> {
               controller: _controller,
               onChanged: (val) =>
                   ref.read(draftDecisionProvider.notifier).updateTitle(val),
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               maxLines: null,
               minLines: 1,
               autofocus: true,
@@ -296,7 +293,10 @@ class _Step2OptionsState extends ConsumerState<_Step2Options> {
                 SizedBox(height: 8),
                 Text(
                   'Add at least two options so the app can compare them clearly.',
-                  style: TextStyle(fontSize: 15, color: AppColors.textSecondary),
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ],
             ),

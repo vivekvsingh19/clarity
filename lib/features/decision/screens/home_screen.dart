@@ -280,7 +280,6 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-
   Widget _buildStatChip(String label, String value) {
     return Expanded(
       child: Container(
@@ -355,7 +354,11 @@ class _DecisionPillCard extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.layers_rounded, size: 12, color: AppColors.primary),
+                  const Icon(
+                    Icons.layers_rounded,
+                    size: 12,
+                    color: AppColors.primary,
+                  ),
                   const SizedBox(width: 6),
                   Text(
                     '${decision.options.length} options',
