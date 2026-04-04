@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/colors.dart';
 import '../providers/decision_provider.dart';
 import '../models/decision.dart';
@@ -54,7 +55,7 @@ class ClarityResultScreen extends ConsumerWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFF9FAFD), Color(0xFFF2F5FB)],
+            colors: [Color(0xFFF8F1E8), Color(0xFFF4EADF)],
           ),
         ),
         child: SingleChildScrollView(
@@ -63,12 +64,62 @@ class ClarityResultScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (hasBiases) ...[
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF0E7D5),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 44,
+                        height: 44,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xFFE0B65F),
+                        ),
+                        child: const Icon(
+                          Icons.psychology_alt_rounded,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Text(
+                          'You may be influenced by short-term emotion.',
+                          style: GoogleFonts.nunito(
+                            fontSize: 20,
+                            height: 1.35,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 26),
+              ],
               Text(
-                'Verdict',
-                style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: -1.2,
+                'Recommended Choice',
+                style: GoogleFonts.playfairDisplay(
+                  fontSize: 22,
+                  fontStyle: FontStyle.italic,
+                  color: const Color(0xFF6F728A),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                bestOption.title,
+                style: GoogleFonts.playfairDisplay(
+                  fontSize: 64,
+                  height: 1.0,
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(height: 8),
@@ -83,17 +134,28 @@ class ClarityResultScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
               _SummaryCard(bestOption: bestOption, isDark: isDark),
-              if (hasBiases) ...[
-                const SizedBox(height: 40),
-                const Text(
-                  'Bias warning',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+              const SizedBox(height: 18),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => context.pop(),
+                  child: const Text('Accept Decision'),
                 ),
-                const SizedBox(height: 16),
-                ...decision.biases.map(
-                  (b) => _BiasCard(biasInsight: b, isDark: isDark),
+              ),
+              const SizedBox(height: 12),
+              Center(
+                child: TextButton(
+                  onPressed: () => context.pop(),
+                  child: Text(
+                    'Reconsider',
+                    style: GoogleFonts.playfairDisplay(
+                      color: AppColors.primary,
+                      fontSize: 28,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
                 ),
-              ],
+              ),
               const SizedBox(height: 40),
               const Text(
                 'Breakdown',
@@ -107,6 +169,12 @@ class ClarityResultScreen extends ConsumerWidget {
                   isBest: opt.id == bestOption.id,
                 );
               }),
+              if (hasBiases) ...[
+                const SizedBox(height: 20),
+                ...decision.biases.map(
+                  (b) => _BiasCard(biasInsight: b, isDark: isDark),
+                ),
+              ],
               const SizedBox(height: 48),
             ],
           ),
@@ -132,8 +200,8 @@ class _SummaryCard extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [
             AppColors.primary,
-            AppColors.primary.withBlue(50),
-            AppColors.pastelPurple,
+            const Color(0xFF6A4A30),
+            const Color(0xFFB88363),
           ],
         ),
         borderRadius: BorderRadius.circular(28),
@@ -162,7 +230,7 @@ class _SummaryCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
-                  'Recommendation',
+                  'calm recommendation',
                   style: TextStyle(
                     color: AppColors.onPrimary.withAlpha(230),
                     fontWeight: FontWeight.w700,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/colors.dart';
 import '../providers/draft_decision_provider.dart';
 import '../providers/decision_provider.dart';
@@ -51,19 +52,27 @@ class _CreateDecisionScreenState extends ConsumerState<CreateDecisionScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final stepTitles = [
+      'New Career\nPath',
+      'Possible\nDirections',
+      'Deep\nComparison',
+      'Regret\nAnalysis',
+    ];
+    final stepSubtitles = [
+      'Exploring the balance between creative fulfillment and practical outcomes.',
+      'List the key options you want to evaluate fairly.',
+      'Compare trade-offs with weighted pros and cons.',
+      'Imagine how each path might feel in the future.',
+    ];
 
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: _prevPage,
         ),
-        title: Text(
-          'Step ${_currentPage + 1} of $_totalPages',
-          style: theme.textTheme.titleSmall?.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        title: Text('Clarity', style: GoogleFonts.playfairDisplay(fontSize: 28)),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4),
           child: LinearProgressIndicator(
@@ -81,6 +90,33 @@ class _CreateDecisionScreenState extends ConsumerState<CreateDecisionScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 20, 24, 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    stepTitles[_currentPage],
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 52,
+                      height: 1.0,
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    stepSubtitles[_currentPage],
+                    style: GoogleFonts.nunito(
+                      fontSize: 22,
+                      color: AppColors.textSecondary,
+                      height: 1.4,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: PageView(
                 controller: _pageController,
