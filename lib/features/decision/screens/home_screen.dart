@@ -30,7 +30,11 @@ class HomeScreen extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.menu, size: 24, color: AppColors.textPrimary),
+                  const Icon(
+                    Icons.menu,
+                    size: 24,
+                    color: AppColors.textPrimary,
+                  ),
                   const SizedBox(width: 14),
                   Text(
                     'Clarity',
@@ -43,7 +47,9 @@ class HomeScreen extends ConsumerWidget {
                   const Spacer(),
                   const CircleAvatar(
                     radius: 20,
-                    backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=47'),
+                    backgroundImage: NetworkImage(
+                      'https://i.pravatar.cc/150?img=47',
+                    ),
                   ),
                 ],
               ),
@@ -162,7 +168,10 @@ class _InsightCard extends StatelessWidget {
               shape: BoxShape.circle,
               color: Color(0xFFE0B65F),
             ),
-            child: const Icon(Icons.psychology_alt_rounded, color: AppColors.primary),
+            child: const Icon(
+              Icons.psychology_alt_rounded,
+              color: AppColors.primary,
+            ),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -225,7 +234,9 @@ class _JourneyCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    decision.title.isEmpty ? 'Untitled journey' : decision.title,
+                    decision.title.isEmpty
+                        ? 'Untitled journey'
+                        : decision.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.playfairDisplay(
@@ -236,7 +247,10 @@ class _JourneyCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: const Color(0xFFF2F0EE),
                     borderRadius: BorderRadius.circular(20),
@@ -266,7 +280,9 @@ class _JourneyCard extends StatelessWidget {
                 value: routeStage.progress,
                 minHeight: 6,
                 backgroundColor: const Color(0xFFE8E5E1),
-                valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF0A1C58)),
+                valueColor: const AlwaysStoppedAnimation<Color>(
+                  Color(0xFF0A1C58),
+                ),
               ),
             ),
             const SizedBox(height: 12),
@@ -299,7 +315,9 @@ class _JourneyCard extends StatelessWidget {
   _RouteStage _routeStage(Decision decision) {
     final hasTitle = decision.title.trim().isNotEmpty;
     final hasOptions = decision.options.isNotEmpty;
-    final hasProsCons = decision.options.any((option) => option.prosCons.isNotEmpty);
+    final hasProsCons = decision.options.any(
+      (option) => option.prosCons.isNotEmpty,
+    );
     final hasRegret = decision.options.any(
       (option) => option.actionRegret > 1 || option.inactionRegret > 1,
     );
