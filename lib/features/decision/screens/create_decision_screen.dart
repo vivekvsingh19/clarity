@@ -72,7 +72,10 @@ class _CreateDecisionScreenState extends ConsumerState<CreateDecisionScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: _prevPage,
         ),
-        title: Text('Clarity', style: GoogleFonts.playfairDisplay(fontSize: 28)),
+        title: Text(
+          'Clarity',
+          style: GoogleFonts.playfairDisplay(fontSize: 28),
+        ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4),
           child: LinearProgressIndicator(
