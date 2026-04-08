@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/decision/screens/home_screen.dart';
 import 'features/decision/screens/create_decision_screen.dart';
-import 'features/decision/screens/clarity_result_screen.dart'; //
+import 'features/decision/screens/clarity_result_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
